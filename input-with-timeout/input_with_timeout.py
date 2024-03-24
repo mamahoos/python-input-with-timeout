@@ -3,11 +3,28 @@ from typing import Union, Any
 import time, builtins, types
 
 
-try:
-    from msvcrt import getch, kbhit
-except ImportError:
-    print("Currently only Windows is supported.")
-    builtins.exit(1)
+try:                                    # Windows
+    from msvcrt import getch, kbhit        
+except ImportError:                     # Unix
+    import sys, select, termios, tty
+
+    def kbhit() -> bool:
+        # Check if there is any input available on stdin without blocking
+        dr, dw, de = select.select([sys.stdin], [], [], 0)
+        return bool(dr)
+
+    def getch() -> str:
+        # Save the current terminal settings
+        old_settings = termios.tcgetattr(sys.stdin)
+    
+        try:
+            tty.setcbreak(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            # Restore the terminal settings
+            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
+    
+        return ch
 
 
 def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 20.0 ) -> str:
