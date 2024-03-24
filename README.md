@@ -21,6 +21,6 @@ from input_with_timeout import input_with_timeout
 
 try:
     user_input = input_with_timeout("Enter your input: ", timeout=10)
-    print(f"Input received: {user_input}")
+    print(f"Input received: '{user_input}'.")
 except TimeoutError:
     print("No input received within the timeout period.")
