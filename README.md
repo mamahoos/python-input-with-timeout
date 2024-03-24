@@ -5,7 +5,7 @@ This Python project provides a function `input_with_timeout` which allows captur
 ## Features
 
 - Customizable `timeout` for user input.
-- Cross-platform support (currently only Windows is supported).
+- Cross-platform support.
 - Easy integration with existing Python projects.
 
 ## Installation
