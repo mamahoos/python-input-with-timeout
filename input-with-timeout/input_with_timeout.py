@@ -1,4 +1,4 @@
-from console_output import cout, endl
+from .console_output import cout, endl
 from typing import Union, Any
 import time, builtins, types
 
