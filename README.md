@@ -12,6 +12,9 @@ This Python project provides a function `input_with_timeout` which allows captur
 
 To use the `input_with_timeout` function, simply import it from the module and call it with the desired prompt and `timeout` values.
 
+## Contact
+If you want to contact me you can reach me at https://t.me/mamahoos .
+
 ```python
 from input_with_timeout import input_with_timeout
 
