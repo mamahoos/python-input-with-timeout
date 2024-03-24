@@ -27,4 +27,18 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
-from input_with_timeout import input_with_timeout
+from .input_with_timeout import input_with_timeout
+from .__version__ import (
+    __title__,
+    __description__,
+    __version__,
+    __version_info__,
+    __author__,
+    __author_email__,
+    __url__,
+    __copyright__,
+    __license__,
+    __keywords__,
+    __platforms__,
+    __classifiers__,
+)
