@@ -1,6 +1,14 @@
 """
+# Input with Timeout
+
 The 'input-with-timeout' module provides a cross-platform method to capture user input with a timeout feature.
 This is particularly useful for creating command-line interfaces where the program needs to proceed if the user does not provide input within a certain time frame.
+
+## Features
+
+- Customizable `timeout` for user input.
+- Cross-platform support (currently only Windows is supported).
+- Easy integration with existing Python projects.
 
 This module is part of the 'python-input-with-timeout' project by mamahoos, available at:
 https://github.com/mamahoos/python-input-with-timeout
