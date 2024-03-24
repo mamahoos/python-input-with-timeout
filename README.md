@@ -8,10 +8,6 @@ This Python project provides a function `input_with_timeout` which allows captur
 - Cross-platform support.
 - Easy integration with existing Python projects.
 
-## Installation
-
-No additional libraries are required for this project as it uses standard Python libraries.
-
 ## Usage
 
 To use the `input_with_timeout` function, simply import it from the module and call it with the desired prompt and `timeout` values.
