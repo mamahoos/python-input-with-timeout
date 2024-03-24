@@ -14,7 +14,7 @@ No additional libraries are required for this project as it uses standard Python
 
 ## Usage
 
-To use the `input_with_timeout` function, simply import it from the module and call it with the desired prompt and timeout values.
+To use the `input_with_timeout` function, simply import it from the module and call it with the desired prompt and `timeout` values.
 
 ```python
 from input_with_timeout import input_with_timeout
