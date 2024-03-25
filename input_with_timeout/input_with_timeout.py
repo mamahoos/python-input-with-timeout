@@ -4,7 +4,11 @@ import time, builtins, types
 
 
 try:                                    # Windows
-    from msvcrt import getch, kbhit        
+    from msvcrt import kbhit, getch as _getch
+    
+    def getch() -> str:
+        return _getch().decode(encoding='utf-8')
+    
 except ImportError:                     # Unix
     import sys, select, termios, tty
 
@@ -74,8 +78,8 @@ def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 2
 
     while (time.monotonic() < end):
         if kbhit():                     # If a key has been pressed
-            ch = getch().decode(encoding='utf-8')
-                                        # Get the pressed character
+            ch = getch()                # Get the pressed character
+                        
             if ch in (CR, LF):          # If the character is a carriage return or line feed
                 cout << endl            # cout << CR << LF
                 return line
