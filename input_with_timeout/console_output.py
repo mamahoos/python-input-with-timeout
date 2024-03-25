@@ -1,4 +1,10 @@
-import sys, typing
+try:
+    Self = __import__('typing')
+except ImportError:
+    Self = "typing.Self"
+finally:
+    import sys
+    Any  = __import__('typing').Any
 
 
 CR = '\r'
@@ -9,7 +15,7 @@ class Endl(object):
     pass
 
 class Cout(object):
-    def __lshift__(self, other: typing.Any) -> typing.Self:
+    def __lshift__(self, other: Any) -> Self:
         sys.stdout.write(CR + LF if isinstance(other, Endl) else str(other))
         sys.stdout.flush()
         return self
