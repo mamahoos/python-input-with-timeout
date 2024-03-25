@@ -3,6 +3,7 @@ from typing import Union, Any
 import builtins
 
 
+
 def windows_input_with_timeout(prompt, timeout):
     cout << prompt              # Print the prompt to the console
 
@@ -93,7 +94,7 @@ def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 2
         return builtins.input(prompt)
     elif timeout <= 0:
         raise ValueError(f"timeout value must be greater than zero, timeout: {timeout}.")
-    
+
     try:
         global msvcrt, time
         import msvcrt, time
