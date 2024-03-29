@@ -1,5 +1,5 @@
 try:
-    Self = __import__('typing')
+    Self = __import__('typing').Self
 except ImportError:
     Self = "typing.Self"
 finally:
