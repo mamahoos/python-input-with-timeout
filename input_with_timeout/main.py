@@ -16,7 +16,8 @@ def input_and_save(prompt, result_dict) -> None:
     ### Side Effects:
     - Modifies the `result_dict` to include the user's input with the key 'result'.
     """
-    stdin = open(file=0)               # Open the standard input
+
+    stdin = builtins.open(file=0)      # Open the standard input
     print(prompt, end="", flush=True)  # Print the prompt
     result = stdin.readline().rstrip() # Read a line from the standard input and remove trailing newline
     result_dict['result'] = result     # Save the result to the dictionary
