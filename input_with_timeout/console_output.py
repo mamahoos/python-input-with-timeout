@@ -7,16 +7,12 @@ finally:
     Any  = __import__('typing').Any
 
 
-CR = '\r'
-LF = '\n'
-
-
 class Endl(object):
     pass
 
 class Cout(object):
     def __lshift__(self, other: Any) -> Self:
-        sys.stdout.write(CR + LF if isinstance(other, Endl) else str(other))
+        sys.stdout.write("\r\n" if isinstance(other, Endl) else str(other))
         sys.stdout.flush()
         return self
     
