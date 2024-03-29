@@ -1,65 +1,25 @@
-from .console_output import cout, endl
-from typing import Union, Any
-import builtins
+from typing import Any, Union
+import builtins, multiprocessing
 
 
+def input_and_save(prompt, result_dict) -> None:
+    """
+    This function reads a line from the standard input and saves it to a dictionary.
 
-def windows_input_with_timeout(prompt, timeout):
-    cout << prompt              # Print the prompt to the console
+    ### Parameters:
+    - prompt (Any): The object to display before waiting for input.
+    - result_dict (multiprocessing.managers.DictProxy): The dictionary where the result will be stored.
 
-    CR = chr(0x0D)              # Carriage return character
-    LF = chr(0x0A)              # Line feed character 
-    BS = chr(0x08)              # Backspace character
-    SP = chr(0x20)              # Space character 
+    ### Returns:
+    - None
 
-    DELAY = 5e-2                # 50 ms
-    line  = ''                  # Initialize an empty line buffer
-    start = time.monotonic()
-    end   = start + timeout     # Calculate the end time for the timeout
-
-    while (time.monotonic() < end):
-        if msvcrt.kbhit():              # If a key has been pressed
-            ch = msvcrt.getch() \
-            .decode(encoding='utf-8')   # Get the pressed character and decode it to utf-8
-                        
-            if ch in (CR, LF):          # If the character is a carriage return or line feed
-                cout << endl            # cout << CR << LF
-                return line
-            
-            elif ch == BS:              # Handle backspace character
-                if line:                # If the line is not empty 
-                    line = line[:-1]    # Remove the last character from the line
-                    cout << BS << SP    # Clear the last character from the screen
-                    cout << BS          # Move the cursor back
-
-            else:
-                line += ch              # Append the character to the end of the line
-                cout << ch
-        else:
-            time.sleep(DELAY)           # Sleep for a short delay (50 ms) to prevent high CPU usage
-
-    cout << ''.join(
-        BS * len(line) + SP * len(line) # Clear the line if timeout is reached
-    ) << endl
-                                        
-    raise TimeoutError                  # raise TimeoutError if timeout is reached
-
-
-
-def unix_input_with_timeout(prompt, timeout):
-    cout << prompt              # Print the prompt to the console
-
-    settings = termios.tcgetattr(sys.stdin)
-    try:
-        tty.setraw(sys.stdin)
-        output, _, _ = select.select([sys.stdin], [], [], timeout)
-        if output:
-            return sys.stdin.readline().rstrip('\n')
-        else:
-            raise TimeoutError
-    finally:
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-
+    ### Side Effects:
+    - Modifies the `result_dict` to include the user's input with the key 'result'.
+    """
+    stdin = open(file=0)               # Open the standard input
+    print(prompt, end="", flush=True)  # Print the prompt
+    result = stdin.readline().rstrip() # Read a line from the standard input and remove trailing newline
+    result_dict['result'] = result     # Save the result to the dictionary
 
 
 def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 20.0) -> str:
@@ -79,7 +39,7 @@ def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 2
     - TypeError: If the `timeout` is not an instance of `int`, `float`, or `None`.
     - ValueError: If the `timeout` value is less than or equal to zero.
 
-    ### Usage:
+    ### Example:
     ```python
         # To get input with a timeout:
         result = input_with_timeout("Please enter your input: ", timeout=15.0)
@@ -88,22 +48,33 @@ def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 2
         result = input_with_timeout("Please enter your input: ", timeout=None)
     """
 
+    # Check the type and value of the timeout
     if not (isinstance(timeout, (int, float)) or timeout is None):
         raise TypeError(f"timeout must be 'int' or 'float' or 'None', not {type(timeout)}.")
-    elif timeout is None:
-        return builtins.input(prompt)
-    elif timeout <= 0:
-        raise ValueError(f"timeout value must be greater than zero, timeout: {timeout}.")
+    elif timeout is None:       # If no timeout is specified, use the built-in input function
+        return builtins.input(prompt)  
+    elif timeout <= 0:          # If the timeout is not positive, raise an error
+        raise ValueError(f"timeout value must be greater than zero, timeout: {timeout}.")  
 
+    manager = multiprocessing.Manager()  # Create a manager object
+    result_dict = manager.dict()        # Create a dictionary in the manager's namespace
+
+    # Create a new process that will call the input_and_save function
+    process = multiprocessing.Process(target=input_and_save, args=(prompt, result_dict))
+    process.start()          # Start the new process
+    process.join(timeout)  # Wait for the process to finish or for the timeout to expire
+    process.terminate()  # Terminate the process
+
+            # If the process finished before the timeout, return the result
+    if 'result' in result_dict:
+        return result_dict['result']
+    else:   # If the process did not finish before the timeout, raise an error
+        raise TimeoutError("Timeout occurred.")  
+
+
+if __name__ == "__main__":
     try:
-        global msvcrt, time
-        import msvcrt, time
-        func = windows_input_with_timeout
-    
-    except ImportError:
-        global sys, tty, termios, select
-        import sys, tty, termios, select
-        func = unix_input_with_timeout
-
-    finally:
-        return func(prompt, timeout)
+        name = input_with_timeout('Enter your name: ', 10)
+        print('Bonjour', name, '!')
+    except TimeoutError as e:
+        print("\n""{}: {}".format(type(e).__name__, str(e)))
