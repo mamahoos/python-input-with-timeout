@@ -7,7 +7,7 @@ You can install this packag using the following commands:
 ```bash
 pip install input-with-timeout
 ```
-or
+ or
 ```bash
 pip install git+https://github.com/mamahoos/python-input-with-timeout
 ```
