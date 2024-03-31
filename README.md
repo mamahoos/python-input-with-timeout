@@ -2,6 +2,16 @@
 
 This Python project provides a function `input_with_timeout` which allows capturing user input with a specified `timeout`. If the user does not provide input within the `timeout` period, a `TimeoutError` is raised.
 
+## Installation
+You can install this package directly from the GitHub repository using the following command:
+```bash
+pip install git+https://github.com/mamahoos/python-input-with-timeout
+```
+```Afterward, I plan to upload it to PyPI, so you’ll be able to install it using:```
+```bash
+pip install input-with-timeout
+```
+
 ## Features
 
 - Customizable `timeout` for user input.
