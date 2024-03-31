@@ -1,4 +1,4 @@
-__title__        = 'input_with_timeout'
+__title__        = 'input-with-timeout'
 __description__  = 'The \'input-with-timeout\' module provides a cross-platform method to capture user input with a timeout feature.'
 __version__      = '3.0'
 __version_info__ = (3, 0)
