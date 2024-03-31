@@ -39,10 +39,10 @@ def windows_input_with_timeout(prompt, timeout):
             time.sleep(DELAY)           # Sleep for a short delay (50 ms) to prevent high CPU usage
 
     cout << ''.join(
-        BS * len(line) + SP * len(line)         # Clear the line if timeout is reached
+        BS * len(line) + SP * len(line) # Clear the line if timeout is reached
     ) << endl
                                         
-    raise TimeoutError("Timeout occurred.")     # raise TimeoutError if timeout is reached
+    raise TimeoutError                  # raise TimeoutError if timeout is reached
 
 
 
@@ -54,9 +54,9 @@ def unix_input_with_timeout(prompt, timeout):
         tty.setraw(sys.stdin)
         output, _, _ = select.select([sys.stdin], [], [], timeout)
         if output:
-            return sys.stdin.readline().rstrip()
+            return sys.stdin.readline().rstrip('\n')
         else:
-            raise TimeoutError("Timeout occurred.")
+            raise TimeoutError
     finally:
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
 
