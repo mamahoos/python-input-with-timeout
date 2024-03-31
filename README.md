@@ -7,7 +7,7 @@ You can install this package directly from the GitHub repository using the follo
 ```bash
 pip install git+https://github.com/mamahoos/python-input-with-timeout
 ```
-- Afterward, I plan to upload it to pypi.org, so you’ll be able to install it using:
+Afterward, I plan to upload it to `pypi.org`, so you’ll be able to install it using:
 ```bash
 pip install input-with-timeout
 ```
