@@ -5,11 +5,11 @@ This Python project provides a function `input_with_timeout` which allows captur
 ## Installation
 You can install this package directly from the GitHub repository using the following command:
 ```bash
-pip install git+https://github.com/mamahoos/python-input-with-timeout
+pip install input-with-timeout
 ```
 or
 ```bash
-pip install input-with-timeout
+pip install git+https://github.com/mamahoos/python-input-with-timeout
 ```
 
 ## Features
