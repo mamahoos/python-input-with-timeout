@@ -10,7 +10,7 @@ long_description = (this_directory / "README.md").read_text()
 
 
 setup(
-    name=__title__                                       ,
+    name=__title__                                                              ,
     version=__version__                                                         ,
     packages=find_packages(exclude=(r"python-input-with-timout\old_version", )) ,
     url=__url__                                                                 ,
