@@ -1,19 +1,15 @@
-try:
-    Self = __import__('typing').Self
-except ImportError:
-    Self = "typing.Self"
-finally:
-    import sys
-    Any  = __import__('typing').Any
+from sys.stdout import write, flush
 
+Self = 'typing.Self'
+Any  = object()
 
 class Endl(object):
     pass
 
 class Cout(object):
     def __lshift__(self, other: Any) -> Self:
-        sys.stdout.write("\r\n" if isinstance(other, Endl) else str(other))
-        sys.stdout.flush()
+        write("\r\n" if isinstance(other, Endl) else str(other))
+        flush()
         return self
     
 cout = Cout()
