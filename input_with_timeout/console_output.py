@@ -1,4 +1,4 @@
-from sys.stdout import write, flush
+from sys import stdout
 
 Self = 'typing.Self'
 Any  = object()
@@ -8,8 +8,8 @@ class Endl(object):
 
 class Cout(object):
     def __lshift__(self, other: Any) -> Self:
-        write("\r\n" if isinstance(other, Endl) else str(other))
-        flush()
+        stdout.write("\r\n" if isinstance(other, Endl) else str(other))
+        stdout.flush()
         return self
     
 cout = Cout()
