@@ -1,6 +1,5 @@
 from .console_output import cout, endl
-from typing import Union, Any
-import builtins
+import builtins, types, typing
 
 
 
@@ -62,7 +61,7 @@ def unix_input_with_timeout(prompt, timeout):
 
 
 
-def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 20.0) -> str:
+def input_with_timeout(prompt: typing.Any = '', /, timeout: typing.Union[int, float, None] = 20.0) -> str:
     """\
     This function prompts the user for input and returns the input if received within the specified `timeout`.
     If the input is not received within the `timeout`, a TimeoutError is raised.
@@ -88,7 +87,7 @@ def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 2
         result = input_with_timeout("Please enter your input: ", timeout=None)
     """
 
-    if not (isinstance(timeout, (int, float)) or timeout is None):
+    if not isinstance(timeout, (int, float, types.NoneType)):
         raise TypeError(f"timeout must be 'int' or 'float' or 'None', not {type(timeout)}.")
     elif timeout is None:
         return builtins.input(prompt)
@@ -105,5 +104,5 @@ def input_with_timeout(prompt: Any = '', /, timeout: Union[int, float, None] = 2
         import sys, tty, termios, select
         func = unix_input_with_timeout
 
-    finally:
-        return func(prompt, timeout)
+    return func(prompt, timeout)
+
