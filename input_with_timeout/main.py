@@ -10,6 +10,7 @@ def windows_input_with_timeout(prompt, timeout):
     LF = chr(0x0A)              # Line feed character 
     BS = chr(0x08)              # Backspace character
     SP = chr(0x20)              # Space character 
+    ET = chr(0x03)              # End of text character
 
     DELAY = 5e-2                # 50 ms
     line  = ''                  # Initialize an empty line buffer
@@ -18,13 +19,15 @@ def windows_input_with_timeout(prompt, timeout):
 
     while (time.monotonic() < end):
         if msvcrt.kbhit():              # If a key has been pressed
-            ch = msvcrt.getch() \
-            .decode(encoding='utf-8')   # Get the pressed character and decode it to utf-8
+            ch = msvcrt.getwch()   # Get the pressed character
                         
             if ch in (CR, LF):          # If the character is a carriage return or line feed
                 cout << endl            # cout << CR << LF
                 return line
             
+            elif ch == ET:              # Handling Ctrl+C
+                raise KeyboardInterrupt
+
             elif ch == BS:              # Handle backspace character
                 if line:                # If the line is not empty 
                     line = line[:-1]    # Remove the last character from the line

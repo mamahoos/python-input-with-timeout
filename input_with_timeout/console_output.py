@@ -1,5 +1,6 @@
 from sys import stdout
 
+# from typing import Self, Any
 Self = 'typing.Self'
 Any  = object()
 
