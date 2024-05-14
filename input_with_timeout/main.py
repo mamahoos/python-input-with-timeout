@@ -19,7 +19,7 @@ def windows_input_with_timeout(prompt, timeout):
 
     while (time.monotonic() < end):
         if msvcrt.kbhit():              # If a key has been pressed
-            ch = msvcrt.getwch()   # Get the pressed character
+            ch = msvcrt.getwch()        # Get the pressed character
                         
             if ch in (CR, LF):          # If the character is a carriage return or line feed
                 cout << endl            # cout << CR << LF
@@ -107,5 +107,6 @@ def input_with_timeout(prompt: typing.Any = '', /, timeout: typing.Union[int, fl
         import sys, tty, termios, select
         func = unix_input_with_timeout
 
-    return func(prompt, timeout)
+    finally:
+        return func(prompt, timeout)
 
